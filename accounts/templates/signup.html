@@ -1,10 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Registrar - Desafio Login{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h1 class="mb-4">Registrar</h1>
+
+    {% if messages %}
+      <div class="alert alert-info">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.nome.label_tag }}
+        {{ form.nome }}
+        {% if form.nome.errors %}
+          <div class="text-danger">{{ form.nome.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {% if form.email.errors %}
+          <div class="text-danger">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.senha.label_tag }}
+        {{ form.senha }}
+        {% if form.senha.errors %}
+          <div class="text-danger">{{ form.senha.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.confirmar_senha.label_tag }}
+        {{ form.confirmar_senha }}
+        {% if form.confirmar_senha.errors %}
+          <div class="text-danger">{{ form.confirmar_senha.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Checkbox para mostrar/ocultar senhas -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="mostrarSenhas" onclick="togglePasswords()">
+        <label class="form-check-label" for="mostrarSenhas">
+          Mostrar senhas
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-success">Registrar</button>
+      <a href="{% url 'login' %}" class="btn btn-secondary text-white">Cancelar</a>
+    </form>
+  </div>
+</div>
+
+<script>
+function togglePasswords() {
+  const senhaField = document.getElementById("id_senha");
+  const confirmarField = document.getElementById("id_confirmar_senha");
+
+  if (senhaField.type === "password") {
+    senhaField.type = "text";
+    confirmarField.type = "text";
+  } else {
+    senhaField.type = "password";
+    confirmarField.type = "password";
+  }
+}
+</script>
+{% endblock content %}

@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Login - Desafio Login{% endblock title %}
 
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h1 class="mb-4">Login</h1>
+
+    {% if messages %}
+      <div class="alert alert-warning">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        <!-- Erros do campo email -->
+        {% if form.email.errors %}
+          <div class="text-danger">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.senha.label_tag }}
+        {{ form.senha }}
+        <!-- Erros do campo senha -->
+        {% if form.senha.errors %}
+          <div class="text-danger">{{ form.senha.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Checkbox para mostrar/ocultar senha (opcional) -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="mostrarSenhaLogin" onclick="toggleLoginPassword()">
+        <label class="form-check-label" for="mostrarSenhaLogin">Mostrar senha</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Entrar</button>
+      <a href="{% url 'signup' %}" class="btn btn-link">Registre-se</a>
+    </form>
+  </div>
+</div>
+
+<script>
+function toggleLoginPassword() {
+  const senhaField = document.getElementById("id_senha");
+  if (senhaField.type === "password") {
+    senhaField.type = "text";
+  } else {
+    senhaField.type = "password";
+  }
+}
+</script>
+{% endblock content %}
