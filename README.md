@@ -64,6 +64,21 @@ Conforme as orientações recebidas:
 
 ---
 
+## Funcionalidades Extras
+
+1. **Remember Me (Lembrar-me)**  
+   - Checkbox na tela de Login para persistir a sessão por 30 dias ou expirar ao fechar o navegador.
+
+2. **Exibir Nome do Usuário na Home**  
+   - Se o usuário estiver logado, a home mostra “Bem-vindo(a), [Nome]!”.  
+   - Se não estiver logado, exibe “Olá, visitante!”.
+
+3. **Logout na Navbar**  
+   - Link de Logout disponível quando o usuário está autenticado.  
+   - Redireciona para a home após encerrar a sessão.
+
+---
+
 ## Estrutura do Projeto
 
 ```
@@ -144,6 +159,9 @@ desafio_login/
 - **Visualizar Senha**: Incluir JavaScript para exibir/ocultar campos de senha e confirmar senha.  
 - **Integração com Bootstrap**: Garantir que o layout fique simples e funcional.  
 - **@login_required**: Ajustar `LOGIN_URL` no `settings.py` para redirecionar automaticamente quando o usuário não estiver logado.
+- **Remember Me**: Controlar expiração de sessão com `request.session.set_expiry()`.
+- **Exibir Nome**: Ajustar a `home.html` para tratar `user.is_authenticated`.
+- **Logout**: Configurar `LogoutView` e link condicional na navbar.
 
 ---
 
