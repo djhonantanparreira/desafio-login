@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .forms import RegistrationForm, LoginForm
 
@@ -46,7 +48,6 @@ def signup(request):
             email = form.cleaned_data['email']
             senha = form.cleaned_data['senha']
 
-
             # Verificar se o e-mail já está cadastrado
             if User.objects.filter(email=email).exists():
                 form.add_error('email', "E-mail já cadastrado.")
@@ -59,6 +60,14 @@ def signup(request):
                 password=senha,
                 first_name=nome
             )
+
+            subject = 'Bem-vindo ao Desafio Login!'
+            message = f"Olá, {nome}!\n\nSeu cadastro foi realizado com sucesso."
+            email_from = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]
+
+            send_mail(subject, message, email_from, recipient_list, fail_silently=False)
+
             messages.success(request, "Cadastro realizado com sucesso! Faça login para continuar.")
             return redirect('login')
         else:

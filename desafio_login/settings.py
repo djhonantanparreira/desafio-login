@@ -124,3 +124,15 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
+
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'desafio-login@djhonantan.com'
+EMAIL_HOST_PASSWORD = 'Lmxoq?i1'
+
+DEFAULT_FROM_EMAIL = 'desafio-login@djhonantan.com'
