@@ -19,6 +19,8 @@ def login(request):
             email = form.cleaned_data['email']
             senha = form.cleaned_data['senha']
 
+            remember_me = request.POST.get('remember_me')
+
             if not User.objects.filter(username=email).exists():
                 messages.error(request, "E-mail inexistente")
                 return render(request, 'login.html', {'form': form})
@@ -26,6 +28,10 @@ def login(request):
             user = authenticate(request, username=email, password=senha)
             if user is not None:
                 django_login(request, user)
+                if remember_me == 'on':
+                    request.session.set_expiry(60 * 60 * 24 * 30)
+                else:
+                    request.session.set_expiry(0)
                 return redirect('menu')
             else:
                 if senha.strip() == '':

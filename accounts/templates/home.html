@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
-
 {% block title %}Home - Desafio Login{% endblock %}
 
 {% block content %}
-    <h1>Home</h1>
-    <p>Olá, visitante! Você está na página inicial do Desafio Login.</p>
-    <p>Para acessar o conteúdo restrito, faça <a href="{% url 'login' %}">login</a> ou <a href="{% url 'signup' %}">
-        cadastre-se</a>.</p>
-{% endblock %}
+{% if user.is_authenticated %}
+  <h1 class="mb-4">Bem-vindo(a), {{ user.first_name }}!</h1>
+  <p>Você está na página inicial do Desafio Login. Para acessar o menu,
+    <a href="{% url 'menu' %}">clique aqui</a>.
+  </p>
+{% else %}
+  <h1 class="mb-4">Home</h1>
+  <p>Olá, visitante! Você está na página inicial do Desafio Login.</p>
+  <p>
+    Para acessar o conteúdo restrito, faça
+    <a href="{% url 'login' %}">Login</a>
+    ou
+    <a href="{% url 'signup' %}">Cadastre-se</a>.
+  </p>
+{% endif %}
+{% endblock content %}
